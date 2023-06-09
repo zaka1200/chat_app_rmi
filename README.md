@@ -106,7 +106,7 @@ Dans cette partie, le constructeur de la classe `ChatWindow` est défini. Il pre
 
 Partie 4:
 ```java
-clientArea = new JTextArea(); // Added: JTextArea to display connected clients
+clientArea = new JTextArea(); 
 clientArea.setEditable(false);
 JScrollPane clientScrollPane = new JScrollPane(clientArea);
 add(clientScrollPane, BorderLayout.WEST);
@@ -137,7 +137,7 @@ sendButton.addActionListener(new ActionListener() {
 });
 bottomPanel.add(sendButton, BorderLayout.EAST);
 
-disconnectButton = new JButton("Disconnect"); // Added: JButton to disconnect
+disconnectButton = new JButton("Disconnect"); 
 disconnectButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -146,7 +146,7 @@ disconnectButton.addActionListener(new ActionListener() {
 });
 bottomPanel.add(disconnectButton, BorderLayout.WEST);
 
-sendFileButton = new JButton("Send File"); // Added: JButton to send files
+sendFileButton = new JButton("Send File");
 sendFileButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -177,7 +177,7 @@ public void appendMessage(String message) {
     chatArea.append(message + "\n");
 }
 
-public void appendClient(String clientName) { // Added: Display a connected client
+public void appendClient(String clientName) { 
     clientArea.append(clientName + "\n");
 }
 
@@ -253,23 +253,15 @@ Ces deux méthodes permettent à l'utilisateur de se connecter avec un nom d'uti
 
 Partie 8:
 ```java
-private void sendFile() { // Added: Send a file
+private void sendFile() { 
     // Implement the file sending functionality here
     JFileChooser fileChooser = new JFileChooser();
     int result = fileChooser.showOpenDialog(this);
     if (result == JFileChooser.APPROVE_OPTION) {
-        File fileToSend = fileChooser.getSelectedFile();
-
-        // Read the selected file as byte data
-        byte[] fileData = Files.readAllBytes(fileToSend.toPath());
-
-        // Get the file name
+        File fileToSend = fileChooser.getSelectedFile();        
+        byte[] fileData = Files.readAllBytes(fileToSend.toPath());       
         String fileName = fileToSend.getName();
-
-        // Send the file to the server
-        client.sendFile(fileName, fileData);
-
-        // Display a message in the chat area that the file is being sent
+        client.sendFile(fileName, fileData);       
         appendMessage("Me: Sending file - " + fileName);
         clearMessageField();
     }
@@ -487,13 +479,13 @@ Partie 3 :
     @Override
     public void registerClient(ChatClient client) throws RemoteException {
         clients.add(client);
-        notifyClients(client.getName() + " has joined the chat."); // Notify clients about the new client
+        notifyClients(client.getName() + " has joined the chat."); 
     }
 
     @Override
     public void unregisterClient(ChatClient client) throws RemoteException {
         clients.remove(client);
-        notifyClients(client.getName() + " has left the chat."); // Notify clients about the departing client
+        notifyClients(client.getName() + " has left the chat."); 
     }
 ```
 Ces méthodes permettent d'enregistrer et de désenregistrer un client auprès du serveur. Lorsqu'un client est enregistré, sa référence est ajoutée à la liste des clients et les autres clients sont notifiés de son arrivée. De même, lorsqu'un client est désenregistré, sa référence est supprimée de la liste des clients et les autres clients sont notifiés de son départ.
